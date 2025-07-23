@@ -21,6 +21,7 @@
   "homepage": "https://github.com/zNyash/OWC-BR-Tryouts-Bot#readme",
   "description": "",
   "devDependencies": {
+    "@types/colors": "^1.2.4",
     "@types/node": "^24.0.15",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
+    "colors": "^1.4.0",
     "discord.js": "^14.21.0",
     "dotenv": "^17.2.0"
   }
