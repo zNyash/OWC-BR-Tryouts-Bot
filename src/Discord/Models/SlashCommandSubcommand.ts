@@ -5,28 +5,25 @@ import {
 	PermissionsBitField,
 	SlashCommandAttachmentOption,
 	SlashCommandBooleanOption,
-	SlashCommandBuilder,
 	SlashCommandChannelOption,
 	SlashCommandIntegerOption,
 	SlashCommandMentionableOption,
 	SlashCommandNumberOption,
 	SlashCommandRoleOption,
 	SlashCommandStringOption,
+	SlashCommandSubcommandBuilder,
 	SlashCommandUserOption,
 } from "discord.js";
-import { SlashCommandSubcommand } from "./SlashCommandSubcommand";
-import { SlashCommandSubcommandGroup } from "./SlashCommandSubcommandGroup";
+import { SlashCommandMainFunction } from "./SlashCommand";
 
-export type SlashCommandMainFunction = (command: ChatInputCommandInteraction) => void;
-
-export class SlashCommand {
-	private _ = new SlashCommandBuilder();
+export class SlashCommandSubcommand {
+	private _ = new SlashCommandSubcommandBuilder();
 	private _permissions = new PermissionsBitField();
 	private _ephemeral = false;
 	private _hasModal = false;
-	private _subcommands: SlashCommandSubcommand[] = [];
-	private _subcommand_groups: SlashCommandSubcommandGroup[] = [];
-	private _main: SlashCommandMainFunction = (command: ChatInputCommandInteraction) => void {};
+	private _main: SlashCommandMainFunction = (
+		command: ChatInputCommandInteraction
+	) => void {};
 
 	constructor() {}
 
@@ -40,14 +37,8 @@ export class SlashCommand {
 		return this;
 	}
 
-	public setDMPermission(allow: boolean) {
-		this._.setDMPermission(allow);
-		return this;
-	}
-
 	public setPermissions(...permissions: PermissionResolvable[]) {
 		this._permissions.add(permissions);
-		this._.setDefaultMemberPermissions(this.permissions.bitfield);
 		return this;
 	}
 
@@ -86,10 +77,14 @@ export class SlashCommand {
 				this._.addIntegerOption(option);
 			if (option.type == ApplicationCommandOptionType.Mentionable)
 				this._.addMentionableOption(option);
-			if (option.type == ApplicationCommandOptionType.Number) this._.addNumberOption(option);
-			if (option.type == ApplicationCommandOptionType.Role) this._.addRoleOption(option);
-			if (option.type == ApplicationCommandOptionType.String) this._.addStringOption(option);
-			if (option.type == ApplicationCommandOptionType.User) this._.addUserOption(option);
+			if (option.type == ApplicationCommandOptionType.Number)
+				this._.addNumberOption(option);
+			if (option.type == ApplicationCommandOptionType.Role)
+				this._.addRoleOption(option);
+			if (option.type == ApplicationCommandOptionType.String)
+				this._.addStringOption(option);
+			if (option.type == ApplicationCommandOptionType.User)
+				this._.addUserOption(option);
 		}
 
 		return this;
@@ -103,32 +98,6 @@ export class SlashCommand {
 
 	public execute(command: ChatInputCommandInteraction) {
 		this._main(command);
-
-		return this;
-	}
-
-	public getGroup(groupName: string) {
-		return this._subcommand_groups.find(
-			(g) => g.name.trim().toLowerCase() == groupName.toLowerCase().trim(),
-		);
-	}
-
-	public getSubcommand(commandName: string) {
-		return this._subcommands.find(
-			(g) => g.name.trim().toLowerCase() == commandName.toLowerCase().trim(),
-		);
-	}
-
-	public addSubcommand(command: SlashCommandSubcommand) {
-		this._subcommands.push(command);
-		this._.addSubcommand(command.onlyBuilder());
-
-		return this;
-	}
-
-	public addSubcommandGroup(group: SlashCommandSubcommandGroup) {
-		this._subcommand_groups.push(group);
-		this._.addSubcommandGroup(group.onlyBuilder());
 
 		return this;
 	}
@@ -153,8 +122,11 @@ export class SlashCommand {
 		return this._.description;
 	}
 
-	public get dm_permission() {
-		return this._.dm_permission;
+	/**
+	 * # Internal usage
+	 */
+	public onlyBuilder() {
+		return this._;
 	}
 
 	public toJSON() {

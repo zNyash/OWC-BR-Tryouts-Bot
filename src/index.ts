@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import { Logger } from "./utils/Logger";
+import { CommandsManager } from "./Discord/CommandsManager";
 
 config();
 // const DISCORD_TOKEN = process.env.DISCORD_APP_TOKEN;
@@ -46,14 +47,21 @@ config();
 // main();
 
 export class Main {
-	private static DiscordClient = new Client({
+	public static readonly DiscordClient = new Client({
 		intents: [GatewayIntentBits.Guilds],
 	});
 
-	public static Initialize() {
+	public static async Initialize() {
 		Logger.Info("Inicializando a bomba...");
 
-		Main.DiscordClient.login(process.env.DISCORD_APP_TOKEN);
+		await Main.DiscordClient.login(process.env.DISCORD_APP_TOKEN);
+		await CommandsManager.InitializeCommands();
+
+		Main.DiscordClient.on("interactionCreate", (interaction) => {
+			if (interaction.isChatInputCommand()) {
+				CommandsManager.HandleCommandInteraction(interaction);
+			}
+		});
 
 		Logger.Success("ligo");
 	}
