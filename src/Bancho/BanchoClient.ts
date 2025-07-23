@@ -10,8 +10,10 @@ export class BanchoManager {
 	public static async Connect() {
 		Logger.Info("Connecting to Bancho server");
 
-		BanchoManager.BanchoClient.connect();
+		await BanchoManager.BanchoClient.connect();
 
 		Logger.Success("Connected to Bancho and listening to messages");
 	}
+
+	private static async HandleMessage() {}
 }
