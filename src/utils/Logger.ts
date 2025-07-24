@@ -1,64 +1,64 @@
 import "colors";
 
 export class Logger {
-	private static readonly TextDivisor = " ";
+    private static readonly TextDivisor = " ";
 
-	private static Now() {
-		const now = new Date();
+    private static Now() {
+        const now = new Date();
 
-		return `${now.getHours()}:${now.getMinutes()}`;
-	}
+        return `${now.getHours()}:${now.getMinutes()}`;
+    }
 
-	public static Error(...args: (string | any)[]) {
-		console.log(
-			`[${Logger.Now()}]` +
-				Logger.TextDivisor +
-				`[Error]`.bgRed.black +
-				Logger.TextDivisor +
-				`${args[0]}`.red,
-		);
-		console.log(`> Begin of error stack`.red);
+    public static Error(...args: (string | any)[]) {
+        console.log(
+            `[${Logger.Now()}]` +
+                Logger.TextDivisor +
+                `[Error]`.bgRed.black +
+                Logger.TextDivisor +
+                `${args[0]}`.red,
+        );
+        console.log(`> Begin of error stack`.red);
 
-		console.error(args.splice(1, args.length));
+        console.error(args.splice(1, args.length));
 
-		console.log(`> End of error stack`.red);
+        console.log(`> End of error stack`.red);
 
-		return;
-	}
+        return;
+    }
 
-	public static Warning(message: string) {
-		console.log(
-			`[${Logger.Now()}]` +
-				Logger.TextDivisor +
-				`[Warning]`.bgYellow.black +
-				Logger.TextDivisor +
-				`${message}`.yellow,
-		);
+    public static Warning(message: string) {
+        console.log(
+            `[${Logger.Now()}]` +
+                Logger.TextDivisor +
+                `[Warning]`.bgYellow.black +
+                Logger.TextDivisor +
+                `${message}`.yellow,
+        );
 
-		return;
-	}
+        return;
+    }
 
-	public static Success(message: string) {
-		console.log(
-			`[${Logger.Now()}]` +
-				Logger.TextDivisor +
-				`[Success]`.bgGreen.black +
-				Logger.TextDivisor +
-				`${message}`.green,
-		);
+    public static Success(message: string) {
+        console.log(
+            `[${Logger.Now()}]` +
+                Logger.TextDivisor +
+                `[Success]`.bgGreen.black +
+                Logger.TextDivisor +
+                `${message}`.green,
+        );
 
-		return;
-	}
+        return;
+    }
 
-	public static Info(message: string) {
-		console.log(
-			`[${Logger.Now()}]` +
-				Logger.TextDivisor +
-				`[Info]`.bgCyan.black +
-				Logger.TextDivisor +
-				`${message}`.cyan,
-		);
+    public static Info(message: string) {
+        console.log(
+            `[${Logger.Now()}]` +
+                Logger.TextDivisor +
+                `[Info]`.bgCyan.black +
+                Logger.TextDivisor +
+                `${message}`.cyan,
+        );
 
-		return;
-	}
+        return;
+    }
 }
