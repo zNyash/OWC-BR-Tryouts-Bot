@@ -1,4 +1,3 @@
-
 {
     "printWidth": 100,
     "useTabs": false,
@@ -9,5 +8,5 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "endOfLine": "lf",
-   "semi": true 
+    "semi": true
 }
