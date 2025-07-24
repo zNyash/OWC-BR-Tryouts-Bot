@@ -1,10 +1,8 @@
+import { config } from "./utils/Config";
 import { Client, GatewayIntentBits } from "discord.js";
-import { config } from "dotenv";
 import { Logger } from "./utils/Logger";
 import { CommandsManager } from "./Discord/CommandsManager";
 import { BanchoManager } from "./Bancho/BanchoClient";
-
-config();
 
 export class Main {
     public static readonly DiscordClient = new Client({
@@ -12,9 +10,9 @@ export class Main {
     });
 
     public static async Initialize() {
-        Logger.Info("Inicializando a bomba...");
+        Logger.Info("Starting...");
 
-        await Main.DiscordClient.login(process.env.DISCORD_APP_TOKEN);
+        await Main.DiscordClient.login(config.discord.token);
         await CommandsManager.InitializeCommands();
         await BanchoManager.Connect();
 
@@ -24,8 +22,12 @@ export class Main {
             }
         });
 
-        Logger.Success("ligo");
+        Logger.Success("Bot started!");
     }
 }
 
-Main.Initialize();
+try {
+    Main.Initialize();
+} catch (error) {
+    Logger.Error("Failed to start bot.", error);
+}
