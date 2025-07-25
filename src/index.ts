@@ -2,6 +2,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import { Logger } from "./utils/Logger";
 import { CommandsManager } from "./Discord/CommandsManager";
+import { DatabaseRepository } from "./Repositories/DatabaseRepository";
 
 config();
 // const DISCORD_TOKEN = process.env.DISCORD_APP_TOKEN;
@@ -53,7 +54,8 @@ export class Main {
 
 	public static async Initialize() {
 		Logger.Info("Inicializando a bomba...");
-
+		
+		DatabaseRepository.GetConnection();
 		await Main.DiscordClient.login(process.env.DISCORD_APP_TOKEN);
 		await CommandsManager.InitializeCommands();
 
