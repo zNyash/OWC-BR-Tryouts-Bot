@@ -4,7 +4,7 @@ dotenvConfig();
 
 const requiredEnvironmentVariables = [
     "DISCORD_CLIENT_ID",
-    "DISCORD_APP_TOKEN",
+    "DISCORD_CLIENT_TOKEN",
     "BANCHO_IRC_USERNAME",
     "BANCHO_IRC_PASSWORD",
 ];
@@ -18,7 +18,7 @@ if (missingVariables.length > 0) {
 
 export const config = {
     discord: {
-        token: process.env.DISCORD_APP_TOKEN,
+        token: process.env.DISCORD_CLIENT_TOKEN,
         clientId: process.env.DISCORD_CLIENT_ID,
     },
     bancho: {
