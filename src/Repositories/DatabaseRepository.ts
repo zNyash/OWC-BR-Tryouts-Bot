@@ -16,7 +16,7 @@ export class DatabaseRepository {
             try {
                 this.db = await open({
                     filename: DB_PATH,
-                    driver: sqlite3.Database
+                    driver: SQL3.Database
                 });
                 
                 Logger.Success("Database connection created");
