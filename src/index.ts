@@ -1,31 +1,35 @@
+import { config } from "./utils/Config";
 import { Client, GatewayIntentBits } from "discord.js";
-import { config } from "dotenv";
 import { Logger } from "./utils/Logger";
 import { CommandsManager } from "./Discord/CommandsManager";
+import { BanchoManager } from "./Bancho/BanchoClient";
 import { DatabaseRepository } from "./Repositories/DatabaseRepository";
 
-config();
-
 export class Main {
-	public static readonly DiscordClient = new Client({
-		intents: [GatewayIntentBits.Guilds],
-	});
+    public static readonly DiscordClient = new Client({
+        intents: [GatewayIntentBits.Guilds],
+    });
 
-	public static async Initialize() {
-		Logger.Info("Inicializando a bomba...");
-		
-		await DatabaseRepository.GetConnection();
-		await Main.DiscordClient.login(process.env.DISCORD_APP_TOKEN);
-		await CommandsManager.InitializeCommands();
+    public static async Initialize() {
+        Logger.Info("Starting...");
 
-		Main.DiscordClient.on("interactionCreate", (interaction) => {
-			if (interaction.isChatInputCommand()) {
-				CommandsManager.HandleCommandInteraction(interaction);
-			}
-		});
+        await DatabaseRepository.GetConnection();
+        await Main.DiscordClient.login(config.discord.token);
+        await CommandsManager.InitializeCommands();
+        await BanchoManager.Connect();
 
-		Logger.Success("ligo");
-	}
+        Main.DiscordClient.on("interactionCreate", (interaction) => {
+            if (interaction.isChatInputCommand()) {
+                CommandsManager.HandleCommandInteraction(interaction);
+            }
+        });
+
+        Logger.Success("Bot started!");
+    }
 }
 
-Main.Initialize();
+try {
+    Main.Initialize();
+} catch (error) {
+    Logger.Error("Failed to start bot.", error);
+}
