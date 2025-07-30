@@ -1,6 +1,7 @@
-import { Logger } from "src/utils/Logger";
+import { Logger } from "../utils/Logger";
 
 export class SchedulesRepository {
+
     public static async Create(user: string, date_timestamp: bigint) {
         Logger.Info(`Inserting a new lobby schedule for user ${user}`);
         // TODO

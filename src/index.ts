@@ -1,9 +1,9 @@
-import { config } from "src/utils/Config";
+import { config } from "./utils/Config";
 import { Client, GatewayIntentBits } from "discord.js";
-import { Logger } from "src/utils/Logger";
-import { CommandsManager } from "src/Discord/CommandsManager";
-import { BanchoManager } from "src/Bancho/BanchoClient";
-import { DatabaseRepository } from "src/Repositories/DatabaseRepository";
+import { Logger } from "./utils/Logger";
+import { CommandsManager } from "./Discord/CommandsManager";
+import { BanchoManager } from "./Bancho/BanchoClient";
+import { DatabaseRepository } from "./Repositories/DatabaseRepository";
 
 export class Main {
     public static readonly DiscordClient = new Client({

@@ -1,4 +1,4 @@
-import { SlashCommand } from "src/Discord/Models/SlashCommand";
+import { SlashCommand } from "../Models/SlashCommand";
 
 export default new SlashCommand()
     .setName("teste")
