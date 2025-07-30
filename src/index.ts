@@ -3,6 +3,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { Logger } from "./utils/Logger";
 import { CommandsManager } from "./Discord/CommandsManager";
 import { BanchoManager } from "./Bancho/BanchoClient";
+import { DatabaseRepository } from "./Repositories/DatabaseRepository";
 
 export class Main {
     public static readonly DiscordClient = new Client({
@@ -12,6 +13,7 @@ export class Main {
     public static async Initialize() {
         Logger.Info("Starting...");
 
+        await DatabaseRepository.GetConnection();
         await Main.DiscordClient.login(config.discord.token);
         await CommandsManager.InitializeCommands();
         await BanchoManager.Connect();
