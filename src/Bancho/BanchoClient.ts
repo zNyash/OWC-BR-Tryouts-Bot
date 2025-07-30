@@ -1,6 +1,6 @@
-import { config } from "../utils/Config";
+import { config } from "src/utils/Config";
 import irc from "bancho.js";
-import { Logger } from "../utils/Logger";
+import { Logger } from "src/utils/Logger";
 
 export class BanchoManager {
     public static readonly BanchoClient = new irc.BanchoClient({

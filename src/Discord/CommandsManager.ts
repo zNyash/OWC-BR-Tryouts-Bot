@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import { readdirSync } from "fs";
 import path from "path";
-import { SlashCommand } from "./Models/SlashCommand";
-import { Logger } from "../utils/Logger";
-import { Main } from "..";
+import { SlashCommand } from "src/Discord/Models/SlashCommand";
+import { Logger } from "src/utils/Logger";
+import { Main } from "src";
 
 export class CommandsManager {
     private static rawCommands: SlashCommand[] = [];
