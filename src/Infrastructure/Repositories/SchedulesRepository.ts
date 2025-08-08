@@ -21,8 +21,6 @@ export class SchedulesRepository {
 
         } catch (error) {
             Logger.Error(error);
-
-            throw error;
         }
 
     }
