@@ -3,7 +3,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { Logger } from "./utils/Logger";
 import { CommandsManager } from "./Discord/CommandsManager";
 import { BanchoManager } from "./Bancho/BanchoClient";
-import { DatabaseRepository } from "./Repositories/DatabaseRepository";
+import { DatabaseRepository } from "./Infrastructure/Repositories/DatabaseRepository";
 
 export class Main {
     public static readonly DiscordClient = new Client({
@@ -16,7 +16,7 @@ export class Main {
         await DatabaseRepository.GetConnection();
         await Main.DiscordClient.login(config.discord.token);
         await CommandsManager.InitializeCommands();
-        await BanchoManager.Connect();
+        // await BanchoManager.Connect();
 
         Main.DiscordClient.on("interactionCreate", (interaction) => {
             if (interaction.isChatInputCommand()) {

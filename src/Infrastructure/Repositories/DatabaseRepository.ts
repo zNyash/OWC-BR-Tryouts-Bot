@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
 import path from "path";
-import { Logger } from "../utils/Logger";
+import { Logger } from "../../utils/Logger";
 
 const SQL3 = sqlite3.verbose();
 
@@ -11,7 +11,7 @@ export class DatabaseRepository {
     public static async GetConnection(): Promise<Database> {
         if (this.db === null) {
             Logger.Info("Creating a new database connection");
-            const DB_PATH = path.resolve(__dirname + "/../Database/dev.db");
+            const DB_PATH = path.resolve("src/Infrastructure/Database/dev.db");
 
             try {
                 this.db = await open({
